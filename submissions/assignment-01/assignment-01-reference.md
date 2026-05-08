@@ -1,33 +1,17 @@
 # Assignment 01 — CLI Essentials & Docker Commands
-### Reference Submission — Model Answer
-
-> **Note to students:** This is an example of what a complete, well-structured submission looks like.
-> It shows the expected depth of reflection, how to answer the questions, and the terminal output/evidence required.
-> Your submission should follow this format.
 
 ---
 
-**Name:** Ada Lovelace
-**GitHub:** `ada-reference`
-**Date:** 2026-05-01
+**Name:** Arnold Muoneke
+**GitHub:** `arnold-007`
+**Date:** 2026-05-08
 
 ---
 
-## Part 1 Reflection
-
-The command that was most new to me was **command substitution** using `$(...)`. I had used `echo` and `ls` before, but I hadn't seen how you could embed the output of one command directly inside another. I used it in the one-liner challenge to dynamically label a log file with today's date:
-
-```bash
-ls -la | grep ".txt" > "txt-files-$(date +%Y-%m-%d).log"
-```
-
-I also hadn't used `wc -l` before — it sounds trivial but it's genuinely useful for confirming file contents without opening the file. The idea that everything in the shell is just text flowing through commands started to click for me during this part.
-
----
 
 ## Part 2 — Questions
 
-### Q1: After pulling `alpine:3.19` and running `docker container run alpine echo hi` — how many images and how many containers?
+### Q2.1: After running the four commands above, how many images do you have? How many containers? Why?
 
 **Answer:**
 
