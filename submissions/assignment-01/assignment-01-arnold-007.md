@@ -9,6 +9,10 @@
 ---
 
 
+## Part 1 Reflection
+There was not necessarily a command that was most new to me but the environment variables are things I still need to get accustomed to. Other  than that it was nice to revisit old commands I use also at work on a daily basis.
+rm -rf directory is dangerous because it recursively deletes down the filesystem/folder hierarchy you are referencing to.
+
 ## Part 2 — Questions
 
 ### Q2.1: After running the four commands above, how many images do you have? How many containers? Why?
@@ -16,28 +20,27 @@
 **Answer:**
 
 ```
-$ docker image pull alpine:3.19
+➜  ~ docker image pull alpine:3.19
 3.19: Pulling from library/alpine
-661ff4d9561e: Pull complete
-Digest: sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c4
-Status: Downloaded newer image for alpine:3.19
+Digest: sha256:6baf43584bcb78f2e5847d1de515f23499913ac9f12bdf834811a3145eb11ca1
+Status: Image is up to date for alpine:3.19
 docker.io/library/alpine:3.19
+➜  ~ docker image ls
 
-$ docker image ls
-REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
-alpine       3.19      05455a08881e   3 weeks ago    7.38MB
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
 
-$ docker container run alpine echo hi
+alpine        3.19      83b2b6703a62   7 months ago    7.4MB
+
+➜  ~ docker container run alpine echo hi
 hi
-
-$ docker container ls -a
-CONTAINER ID   IMAGE     COMMAND      CREATED         STATUS                     PORTS     NAMES
-3f7a9c1d8e02   alpine    "echo hi"    5 seconds ago   Exited (0) 4 seconds ago             laughing_hopper
+➜  ~ docker container ls -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS                      PORTS     NAMES
+69dd75373e06   alpine    "echo hi"   12 seconds ago   Exited (0) 11 seconds ago             zen_blackwell
 ```
 
 **1 image, 1 container.**
 
-The container immediately exited with status 0 because `echo hi` ran and finished — there was no long-running process to keep it alive. The image is still on disk (it's the template), but the container (the instance) is now in `Exited` state. It still shows up in `docker container ls -a` because Docker keeps exited containers around until you explicitly `rm` them.
+I can't really tell if there is more to it but simplicity points towards the commands which explicitly pull/create 1 container and 1 Image.
 
 ---
 
@@ -45,49 +48,17 @@ The container immediately exited with status 0 because `echo hi` ran and finishe
 
 **Answer:**
 
-- `docker run -it alpine sh` **creates a brand new container** from the alpine image and immediately opens a shell inside it. When you exit, that container is done — it was created just for this shell session.
+- `docker run -it alpine sh` is more ephemeral in nature in that it **creates a brand new container and auto-cleans up after you exit** f
 
-- `docker exec -it <name> sh` **enters an already-running container** and opens an additional shell process inside it. The container keeps running when you exit — only your exec session ends.
+- `docker exec -it <name> sh` as the name implies **executes a running container** and it exits without killing the container itself
 
-**When to use each:**
-- Use `docker run -it alpine sh` when you want a quick throwaway environment to test something (add `--rm` so it auto-cleans up).
-- Use `docker exec -it <name> sh` when you need to inspect or debug a container that's already running (e.g., your nginx web server) without stopping it.
+- A good analogy would be ephemeral and static IP addresses in Google Cloud. One is lost after a restart/reset whilst the other one stays unchanged.
 
 ---
 
-### Q3: What flag mounts a file from the host into a container as read-only?
 
-```bash
-$ docker container run --help | grep -i mount
-      --mount mount                    Attach a filesystem mount to the container
-  -v, --volume list                    Bind mount a volume
-```
 
-```bash
-$ docker container run --help | grep -A5 "\-\-mount"
-      --mount mount   Attach a filesystem mount to the container
-                      Example: --mount type=bind,source=/host/path,target=/container/path,readonly
-```
-
-**The flag is `--mount` with `readonly` (or `ro`) appended**, for example:
-
-```bash
-docker container run --rm \
-  --mount type=bind,source="$(pwd)/config.yml",target=/app/config.yml,readonly \
-  myapp
-```
-
-You can also use `-v` shorthand:
-
-```bash
-docker container run --rm -v "$(pwd)/config.yml:/app/config.yml:ro" myapp
-```
-
-The `:ro` at the end of the `-v` flag means read-only. I prefer `--mount` because it's explicit and easier to read, especially when there are multiple mounts.
-
----
-
-## Part 3 — Evidence
+## Part 3 — Put It Together
 
 ### Step 3 — `docker container ls` after starting `practice-web`
 
