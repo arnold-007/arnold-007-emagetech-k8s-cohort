@@ -1,6 +1,6 @@
 ## Assignment 02 submission
 
-- **Student:** <Your Name>
+- **Student:** Arnold Muoneke
 - **GitHub username:** arnold-007
 - **Cohort:** Kubernetes January 2026
 - **Sessions covered:** 3 (Running Containers) + 4 (Images Deep Dive)
