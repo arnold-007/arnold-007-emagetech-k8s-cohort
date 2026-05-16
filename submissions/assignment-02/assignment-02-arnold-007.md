@@ -1,12 +1,12 @@
 ## Assignment 02 submission
 
 - **Student:** <Your Name>
-- **GitHub username:** <your-username>
+- **GitHub username:** arnold-007
 - **Cohort:** Kubernetes January 2026
 - **Sessions covered:** 3 (Running Containers) + 4 (Images Deep Dive)
 
 ## Checklist
-- [ ] My report lives at `submissions/assignment-02/<my-username>.md`
+- [ ] My report lives at `submissions/assignment-02/assignment-02-arnold-007.md`
 - [ ] My PR changes exactly one file
 - [ ] I answered all 8 questions
 - [ ] I included the requested command outputs as evidence
