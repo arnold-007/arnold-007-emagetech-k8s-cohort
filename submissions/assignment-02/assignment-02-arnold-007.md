@@ -11,13 +11,26 @@
 
 ## 1. The image I built
 
-- Final image ID: `<docker image inspect -f '{{.Id}}' cohort-greet:0.1.0>`
-- Image size: `<from docker image ls>`
-- Number of layers: `<from docker image history | wc -l minus 1 for header>`
+- Final image ID: 04b5a8dc7823 `<docker image inspect -f '{{.Id}}' cohort-greet:0.1.0>`
+- Image size: 124MB `<from docker image ls>`
+- Number of layers: 6 Layers. I used the Dockerfile entries. Then I observed the IDs during the build process and correlated them to the table entries of docker image history `<from docker image history | wc -l minus 1 for header>`
 
 ### Dockerfile
 \`\`\`dockerfile
 <paste your final Dockerfile here>
+FROM python:3.11-slim
+
+
+
+WORKDIR /app
+COPY app.py .
+
+
+ENV PORT=8000
+EXPOSE 8000
+
+CMD ["python", "app.py"]
+
 \`\`\`
 
 ### .dockerignore
