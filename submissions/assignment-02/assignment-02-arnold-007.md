@@ -1,4 +1,4 @@
-# Assignment 02- Arnold Muoneke
+# Assignment 02 Running Containers & Images Deep Dive - Arnold Muoneke
 
 ---
 
