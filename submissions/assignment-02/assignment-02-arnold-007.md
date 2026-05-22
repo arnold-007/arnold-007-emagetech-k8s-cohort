@@ -3,8 +3,8 @@
 ---
 
 **GitHub username:** arnold-007
-**Date completed:** YYYY-MM-DD
-**Language chosen:** Python | Node.js
+**Date completed:** 2026-05-22
+**Language chosen:** Python
 
 ---
 
