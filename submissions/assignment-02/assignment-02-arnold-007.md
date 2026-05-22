@@ -40,7 +40,9 @@ README.md
 ## 2. Answers to the 8 questions
 
 **Q1 — what `.dockerignore` affects:** `.dockerignore` affects all files/directories named within it and prevent them from being involved in the build stage. In other words, COPY cannot make use of the files. An exception to dockerignore would be Files already in previous layers of the image. I do not understand the reason for adding .git and .gitignore to the dockerignore file but a quick search revealed that this preents redundancy and guards against exposure of sensitive credentials, commits, source code history.
+
 **Q2 — what is the image ID a hash of:**  I love this question because it was my a-ha moment for question 1. The Image ID 04b5a8dc7823 is a hash of Step 6/6 the topmost image layer during the build. This has helped me better visualize the build process as stacking one onion layer/matroshka doll after the other.
+
 **Q3 — largest layer and why:**  After running the history command I noticed these two: 
 ```
 IMAGE          CREATED        CREATED BY                                      SIZE      COMMENT
@@ -50,17 +52,34 @@ IMAGE          CREATED        CREATED BY                                      SI
 <missing>      3 days ago     # debian.sh --arch 'amd64' out/ 'trixie' '@1…   78.6MB    debuerreotype 0.17
 ```
 The largest layer is the one containing the Debian OS Image at 78.6MB. It contains the whole opersting system and is the foundation of the further layers. This makes sense to me.
-**Q4 — `--memory 64m` shows up as what value:** ...
-**Q5 — PID of my app inside the container:** ...
-**Q6 — `stop` vs `kill`, and which for a database:** ...
-**Q7 — what same-IMAGE-ID-across-tags proves:** ...
-**Q8 — tag vs digest mutability:** ...
+
+**Q4 — `--memory 64m` shows up as what value:**
+It shows up in bytes via inspect and not Mebibytes(MiB). Initial suspicion was to avoid over-computing (conversion from one number system to another). I however was curious and found out even more reasons why this is the case. Apparently ocker prints memory in bytes because:
+Kernels require bytes (cgroups, API uses them), No unit ambiguity (avoids MB vs. MiB confusion), Precise & exact (no rounding errors from fractions)
+
+**Q5 — PID of my app inside the container:** 
+ps aux unfortunately didnt work inside the container and I tried installing with `apt-get install procps`. This also did not work! Alternatively, I used `docker top greet`.
+`➜  assignment-02 docker top greet
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                                               CMD
+root                77782               77758               0                   May21               ?                   00:00:                               00            python app.py
+` The PID of my app stems from a parent PID 77758. The app process was initiated by a root user. That's all I can say about this.
+
+**Q6 — `stop` vs `kill`, and which for a database:** `docker stop` cleanly terminates a container without use of force. `docker kill` however, is a forceful abrupt termination of a container. An everday analogy would be shutting down a windows laptop. The graceful method would be to click the shut down button and expect all running tasks to shutdown before the ultimate termination. The "kill" in this case, would be impatiently holding down the power button to forcefully shutdown your windows system. It is primitive but necessary in some cases like blue-screen or glitch scenario. An equivalent of that in Docker would require the use of `docker kill`.
+
+For databases, I would definitely recommend docker stop. This would prevent corruption of databases and also enable clean recovery during the next database start
+
+**Q7 — what same-IMAGE-ID-across-tags proves:**  Tagging an image multiple times, in this case 3 times, does not necessarily mean you will have three images. You do only have 3 pointers pointing towards the same image.
+
+**Q8 — tag vs digest mutability:** Unlike the tag, the digest is immutable and therefore will not give you the same image. It will keep pointing at the original image you tied it to.
 
 ## 3. Evidence
 
 Paste the **command + output** for each of these. Use fenced code blocks. Trim long output to the relevant lines.
 
-- Command: `docker image history cohort-greet:0.1.0` Output: `IMAGE          CREATED        CREATED BY                                      SIZE      COMMENT
+
+- Command: `docker image history cohort-greet:0.1.0`
+  Output:
+  `IMAGE          CREATED        CREATED BY                                      SIZE      COMMENT
 04b5a8dc7823   24 hours ago   /bin/sh -c #(nop)  CMD ["python" "app.py"]      0B
 030b991fd8df   24 hours ago   /bin/sh -c #(nop)  EXPOSE 8000                  0B
 f8901e6ad755   24 hours ago   /bin/sh -c #(nop)  ENV PORT=8000                0B
@@ -77,30 +96,50 @@ f8901e6ad755   24 hours ago   /bin/sh -c #(nop)  ENV PORT=8000                0B
 <missing>      41 hours ago   ENV PATH=/usr/local/bin:/usr/local/sbin:/usr…   0B        buildkit.dockerfile.v0
 <missing>      3 days ago     # debian.sh --arch 'amd64' out/ 'trixie' '@1…   78.6MB    debuerreotype 0.17
 `
-- `docker container run` (Part 2.2 — the detached run with all flags)
-- `docker container logs greet` after 2 curl requests
-- `docker container stats --no-stream greet`
-- `docker container inspect -f '{{.HostConfig.RestartPolicy.Name}} {{.HostConfig.Memory}}' greet`
-- `docker image ls cohort-greet` (showing the three tags from Part 3.1)
+  
+- Command: `docker container run` (Part 2.2 — the detached run with all flags)
+   Output: after run command was this `4a1bd447cc945833f4ade8ac8b1d95236f27f138a9afe3b6136c231ff75499cc` meanwhile on a separate terminal this was the curl output `hi, Arnold Muoneke — 2026-05-21T21:44:28.073206Z`
+      
+- Command: `docker container logs greet` after 2 curl requests
+  Output: `listening on :8000
+[req] 172.17.0.1 "GET / HTTP/1.1" 200 -
+[req] 172.17.0.1 "GET / HTTP/1.1" 200 -
+[req] 172.17.0.1 "GET / HTTP/1.1" 200 -
+`
+- Command: `docker container stats --no-stream greet`
+  Output: `
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O     PIDS
+4a1bd447cc94   greet     0.02%     13.36MiB / 64MiB    20.88%    2.84kB / 1.94kB   0B / 1.95MB   1
+`
+- Command: `docker container inspect -f '{{.HostConfig.RestartPolicy.Name}} {{.HostConfig.Memory}}' greet`
+  Output: `unless-stopped
+67108864`
+- Command: `docker image ls cohort-greet` (showing the three tags from Part 3.1)
+  Output:
+  `REPOSITORY     TAG       IMAGE ID       CREATED        SIZE
+cohort-greet   0.1       04b5a8dc7823   31 hours ago   124MB
+cohort-greet   0.1.0     04b5a8dc7823   31 hours ago   124MB
+cohort-greet   latest    04b5a8dc7823   31 hours ago   124MB`
+
 - (Optional) URL of your pushed image on Docker Hub / GHCR
 
 ## 4. One thing that surprised me
 
-(2–4 sentences. Be specific — "the image was bigger than I expected because the Python base image alone is 130MB and my app is ~2KB" is a good answer; "Docker is cool" is not.)
+What has surprised me this time around is how much one underestimates the probability of errors arising from general commands inside or outside the container. The ps aux for example and other commands like the forest, pstree commands etcetera.
 
 ## 5. One thing I'm still unsure about
 
-(One sentence. This is what your TA will follow up on in office hours.)
+Tracing parent Process IDs with their child Processes' IDs.
 
 ---
 ## Checklist
-- [ ] My report lives at `submissions/assignment-02/assignment-02-arnold-007.md`
-- [ ] My PR changes exactly one file
-- [ ] I answered all 8 questions
-- [ ] I included the requested command outputs as evidence
-- [ ] I cleaned up containers and images on my machine
-- [ ] I read CONTRIBUTING.md and followed the branch + commit conventions
+- [x] My report lives at `submissions/assignment-02/assignment-02-arnold-007.md`
+- [x] My PR changes exactly one file
+- [x] I answered all 8 questions
+- [x] I included the requested command outputs as evidence
+- [x] I cleaned up containers and images on my machine
+- [x] I read CONTRIBUTING.md and followed the branch + commit conventions
 
 ---
 ## Time spent
-~<N> hours
+~Lost Count honestly.
