@@ -6,14 +6,16 @@
 ## 1. Answers to the 10 questions
 
 **Q1 — control-plane components + per-node bucket:** 
-### Pods running on control-plane:
-`NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
+```
+Pods running on control-plane:
+`
+NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 etcd-k8s-lab-control-plane                      1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-apiserver-k8s-lab-control-plane            1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-scheduler-k8s-lab-control-plane            1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 `
-### Pods running on every node:
+Pods running on every node:
 `NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 kindnet-d59f8                                   1/1     Running   0          23h   172.18.0.4   k8s-lab-worker2         <none>           <none>
 kindnet-r4khp                                   1/1     Running   0          23h   172.18.0.3   k8s-lab-worker          <none>           <none>
@@ -22,11 +24,12 @@ kube-proxy-b68tb                                1/1     Running   0          23h
 kube-proxy-bbdjg                                1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-proxy-zbr79                                1/1     Running   0          23h   172.18.0.3   k8s-lab-worker          <none>           <none>
 `
-### Anything else:
+Anything else:
 `NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 coredns-589f44dc88-67sbq                        1/1     Running   0          23h   10.244.0.3   k8s-lab-control-plane   <none>           <none>
 coredns-589f44dc88-7j5bq                        1/1     Running   0          23h   10.244.0.2   k8s-lab-control-plane   <none>           <none>
 `
+```
 kube-apiserver
 etcd
 kube-scheduler
