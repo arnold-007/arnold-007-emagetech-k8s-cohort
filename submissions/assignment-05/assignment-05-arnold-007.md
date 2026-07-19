@@ -30,7 +30,9 @@ coredns-589f44dc88-67sbq                        1/1     Running   0          23h
 coredns-589f44dc88-7j5bq                        1/1     Running   0          23h   10.244.0.2   k8s-lab-control-plane   <none>           <none>
 `
 
-The kube-apiserver is the comoponent that plays the receptionist role, taking all your commands/requests to kubernetes and forwarding them to the ectd which is single source of truth database that stores every info about the k8s infrasctructure which you have set up. Based on the instructions/wishes communicated to kubernetes, the kube-scheduler then tries to matchmake your desired state with resources available in the cluster. It then relays this matchmaking info back to the kube-apiserver. Finally we have the kube-controller-manager which plays the babysitter role by monitoring the state of the cluster and making necessary adjustments to match your desired request.
+The kube-apiserver is the comoponent that plays the receptionist role, taking all your commands/requests to kubernetes and forwarding them to the ectd which is single source of truth database that stores every info about the k8s infrasctructure which you have set up.
+Based on the instructions/wishes communicated to kubernetes, the kube-scheduler then tries to matchmake your desired state with resources available in the cluster. It then relays this matchmaking info back to the kube-apiserver.
+Finally we have the kube-controller-manager which plays the babysitter role by monitoring the state of the cluster and making necessary adjustments to match your desired request.
 ```
 **Q2 — static pods + bootstrap chicken-and-egg:** ...
 **Q3 — etcd quorum + stateless API server:** ...
