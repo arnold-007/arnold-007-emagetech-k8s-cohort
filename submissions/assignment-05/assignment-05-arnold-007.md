@@ -10,24 +10,25 @@
 Pods running on control-plane:
 `
 NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
-etcd-k8s-lab-control-plane                      1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
-kube-apiserver-k8s-lab-control-plane            1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
-kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
-kube-scheduler-k8s-lab-control-plane            1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
+etcd-k8s-lab-control-plane                      1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
+kube-apiserver-k8s-lab-control-plane            1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
+kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
+kube-scheduler-k8s-lab-control-plane            1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 `
 Pods running on every node:
 `NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
-kindnet-d59f8                                   1/1     Running   0          23h   172.18.0.4   k8s-lab-worker2         <none>           <none>
-kindnet-r4khp                                   1/1     Running   0          23h   172.18.0.3   k8s-lab-worker          <none>           <none>
-kindnet-r8qw6                                   1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
-kube-proxy-b68tb                                1/1     Running   0          23h   172.18.0.4   k8s-lab-worker2         <none>           <none>
-kube-proxy-bbdjg                                1/1     Running   0          23h   172.18.0.2   k8s-lab-control-plane   <none>           <none>
-kube-proxy-zbr79                                1/1     Running   0          23h   172.18.0.3   k8s-lab-worker          <none>           <none>
+kindnet-2hl86                                   1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
+kindnet-9cn8g                                   1/1     Running   0          5h5m   172.18.0.3   k8s-lab-worker          <none>           <none>
+kindnet-tr67s                                   1/1     Running   0          5h5m   172.18.0.4   k8s-lab-worker2         <none>           <none>
+kube-proxy-c4v49                                1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
+kube-proxy-kqgps                                1/1     Running   0          5h5m   172.18.0.3   k8s-lab-worker          <none>           <none>
+kube-proxy-xnskl                                1/1     Running   0          5h5m   172.18.0.4   k8s-lab-worker2         <none>           <none>
+
 `
 Anything else:
 `NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
-coredns-589f44dc88-67sbq                        1/1     Running   0          23h   10.244.0.3   k8s-lab-control-plane   <none>           <none>
-coredns-589f44dc88-7j5bq                        1/1     Running   0          23h   10.244.0.2   k8s-lab-control-plane   <none>           <none>
+coredns-589f44dc88-vzsnw                        1/1     Running   0          5h5m   10.244.0.3   k8s-lab-control-plane   <none>           <none>
+coredns-589f44dc88-zv8jc                        1/1     Running   0          5h5m   10.244.0.2   k8s-lab-control-plane   <none>           <none>
 `
 
 The kube-apiserver is the comoponent that plays the receptionist role, taking all your commands/requests to kubernetes and forwarding them to the ectd which is single source of truth database that stores every info about the k8s infrasctructure which you have set up.
