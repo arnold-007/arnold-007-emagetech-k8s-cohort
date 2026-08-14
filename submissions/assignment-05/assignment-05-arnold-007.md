@@ -50,6 +50,7 @@ k8s-lab-worker2         Ready    <none>          6d10h   v1.36.1   172.18.0.4   
   
   ```
 Pods running on control-plane:
+
 `
 NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 etcd-k8s-lab-control-plane                      1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
@@ -58,6 +59,7 @@ kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          5h5
 kube-scheduler-k8s-lab-control-plane            1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 `
 Pods running on every node:
+
 `
 NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 kindnet-2hl86                                   1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
@@ -68,6 +70,7 @@ kube-proxy-kqgps                                1/1     Running   0          5h5
 kube-proxy-xnskl                                1/1     Running   0          5h5m   172.18.0.4   k8s-lab-worker2         <none>           <none>
 `
 Anything else:
+
 `NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 coredns-589f44dc88-vzsnw                        1/1     Running   0          5h5m   10.244.0.3   k8s-lab-control-plane   <none>           <none>
 coredns-589f44dc88-zv8jc                        1/1     Running   0          5h5m   10.244.0.2   k8s-lab-control-plane   <none>           <none>
