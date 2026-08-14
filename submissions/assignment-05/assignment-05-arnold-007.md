@@ -84,6 +84,8 @@ Paste command + output (trim to the relevant lines):
 vs re-writing its manifest, keeping vs deleting the cluster between assignments, etc.
 Explain what you chose and what the other option would have bought you.)
 
+Always having to use the full path of kind to create a cluster: /usr/local/bin/kind create cluster --config kind-basic.yaml --name k8s-lab
+
 ## 5. One thing I'm still unsure about
 
 (One sentence. Goes to office hours.)
