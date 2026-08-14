@@ -58,6 +58,7 @@ kube-apiserver-k8s-lab-control-plane            1/1     Running   0          5h5
 kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-scheduler-k8s-lab-control-plane            1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 `
+
 Pods running on every node:
 
 `
@@ -69,6 +70,7 @@ kube-proxy-c4v49                                1/1     Running   0          5h5
 kube-proxy-kqgps                                1/1     Running   0          5h5m   172.18.0.3   k8s-lab-worker          <none>           <none>
 kube-proxy-xnskl                                1/1     Running   0          5h5m   172.18.0.4   k8s-lab-worker2         <none>           <none>
 `
+
 Anything else:
 
 `NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
