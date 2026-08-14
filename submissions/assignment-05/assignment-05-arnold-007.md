@@ -39,8 +39,16 @@ Finally we have the kube-controller-manager which plays the babysitter role by m
 
 kindnet and kube-proxy both run on each node with each pod having different ID Suffixes. A DaemonSet ensures a copy of a pod runs on all 3 nodes in this example. Seeing that both kindnet and kube-proxy are both node-level networking components, a DaemonSet actively manages their creation and destruction based on cluster activity (node addition/removal).
 
-**Q2 — static pods + bootstrap chicken-and-egg:** ...
-**Q3 — etcd quorum + stateless API server:** ...
+**Q2 — static pods + bootstrap chicken-and-egg:** 
+The kubelet has a built-in static pod feature that watches the /etc/kubernetes/manifests directory by default and can read YAML/JSONs and through them creates pods (Kind docker containers) directly using the container runtime (containerd etc). After creating the static pod for API-server you can now create other components normally therefore breaking the circular deadlock. 
+
+kubectl delete only deletes a static pod's mirror object permanently from the API Server if you delete the single source of truth which is the manifest. The manifest gives the kubelet ultimate power over the API Server allowing it to recreate the pod and forcing the API Server's hand to make a new mirror object.
+
+**Q3 — etcd quorum + stateless API server:** 
+Based on quorum math alone: a 1 member cluster would need a quorum of 1 node meanwhile 2-member cluster needs a quorum of (2/2 +1)=2 nodes. So if a 1-member cluster has afault it is basically gone otherwise it works just fine. A 2-member cluster has to be a perfect two out two healthy nodes because once one node dies the cluster is as well dead. For double the resources you risk the same probability of a dead cluster as the 1-member cluster.
+
+With a stateless API server, if etcd's data is destroyed, the only survivors would be the Kubelet and every thing that runs with it (containerd) or is maintained by it (static pods and its affiliated pods)
+
 **Q4 — contexts + context-drift accident:** ...
 **Q5 — request flow authn/authz/admission/persist + dry-run limits:** ...
 **Q6 — observe/diff/act mapping:** ...
