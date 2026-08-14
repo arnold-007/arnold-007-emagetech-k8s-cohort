@@ -36,6 +36,9 @@ coredns-589f44dc88-zv8jc                        1/1     Running   0          5h5
 The kube-apiserver is the comoponent that plays the receptionist role, taking all your commands/requests to kubernetes and forwarding them to the ectd which is single source of truth database that stores every info about the k8s infrasctructure which you have set up.
 Based on the instructions/wishes communicated to kubernetes, the kube-scheduler then tries to matchmake your desired state with resources available in the cluster. It then relays this matchmaking info back to the kube-apiserver.
 Finally we have the kube-controller-manager which plays the babysitter role by monitoring the state of the cluster and making necessary adjustments to match your desired request.
+
+kindnet and kube-proxy both run on each node with each pod having different ID Suffixes. A DaemonSet ensures a copy of a pod runs on all 3 nodes in this example. Seeing that both kindnet and kube-proxy are both node-level networking components, a DaemonSet actively manages their creation and destruction based on cluster activity (node addition/removal).
+
 **Q2 — static pods + bootstrap chicken-and-egg:** ...
 **Q3 — etcd quorum + stateless API server:** ...
 **Q4 — contexts + context-drift accident:** ...
