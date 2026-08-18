@@ -25,7 +25,14 @@ Based on quorum math alone: a 1 member cluster would need a quorum of 1 node mea
 
 With a stateless API server, if etcd's data is destroyed, the only survivors would be the Kubelet and every thing that runs with it (containerd) or is maintained by it (static pods and its affiliated pods)
 
-**Q4 — contexts + context-drift accident:** ...
+**Q4 — contexts + context-drift accident:** 
+
+The reason why `kubectl get pods` reacted differently is because the config of the k8s-lab-system context had the field `namespace: kube-system` hard-coded in while kind-k8s-lab does not have that field and therefore implicitly refers to the default namespace.
+
+Context drift can cause a command to modify or restart a workload in the wrong cluster or namespace.  If for example an engineer intends to restart an application in a namespace but is using a context whose default namespace is totally different different this could lead to all sorts of issues and could even be difficult to resolve or troubleshoot.
+Before running a risky command, one could check or print out which context and default namespace are active, then verify if it matches with the intended target.
+
+..
 **Q5 — request flow authn/authz/admission/persist + dry-run limits:** ...
 **Q6 — observe/diff/act mapping:** ...
 **Q7 — scheduler-down blast radius:** ...
@@ -99,6 +106,26 @@ Command:  kubectl exec -n kube-system etcd-k8s-lab-control-plane --   etcdctl --
 Output: /registry/pods/default/etcd-canary
 
 - Part 3.2 — `kubectl get pods` under the `k8s-lab-system` context (no -n flag)
+
+`
+[root@localhost ~]# kubectl config use-context k8s-lab-system
+Switched to context "k8s-lab-system".
+[root@localhost ~]# kubectl get pods
+NAME                                            READY   STATUS    RESTARTS   AGE
+coredns-589f44dc88-vzsnw                        1/1     Running   0          10d
+coredns-589f44dc88-zv8jc                        1/1     Running   0          10d
+etcd-k8s-lab-control-plane                      1/1     Running   0          10d
+kindnet-2hl86                                   1/1     Running   0          10d
+kindnet-9cn8g                                   1/1     Running   0          10d
+kindnet-tr67s                                   1/1     Running   0          10d
+kube-apiserver-k8s-lab-control-plane            1/1     Running   0          10d
+kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          10d
+kube-proxy-c4v49                                1/1     Running   0          10d
+kube-proxy-kqgps                                1/1     Running   0          10d
+kube-proxy-xnskl                                1/1     Running   0          10d
+kube-scheduler-k8s-lab-control-plane            1/1     Running   0          10d
+
+`
 - Part 4.2 — the request line(s) from `kubectl apply -v=8`
 - Part 5.1 — the `-w` output showing the deleted pod replaced
 - Part 5.2 — the stuck pod: `Pending` phase + empty `spec.nodeName`
