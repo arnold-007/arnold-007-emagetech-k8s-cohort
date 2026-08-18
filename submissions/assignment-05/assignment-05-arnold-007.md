@@ -116,4 +116,4 @@ Always having to use the full path of kind to create a cluster: /usr/local/bin/k
 
 ## 5. One thing I'm still unsure about
 
-(One sentence. Goes to office hours.)
+Why does coredns from kube-system and local-path-provisioner pods both have 10.244.0.3 and 10.244.0.4 as IPs?
