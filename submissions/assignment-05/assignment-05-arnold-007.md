@@ -55,7 +55,7 @@ k8s-lab-worker2         Ready    <none>          6d10h   v1.36.1   172.18.0.4   
 
 - `kubectl get pods -n kube-system -o wide` (with your three-bucket classification)
   
-  ```
+
 Pods running on control-plane:
 
 `
@@ -86,7 +86,6 @@ coredns-589f44dc88-zv8jc                        1/1     Running   0          5h5
 `
 
 
-```
 
 
 - `docker exec k8s-lab-control-plane ls /etc/kubernetes/manifests`
@@ -101,14 +100,13 @@ kube-scheduler.yaml
 Paste command + output (trim to the relevant lines):
 
 - Part 2.2 — the etcd key for your `etcd-canary` pod
-Command:  kubectl exec -n kube-system etcd-k8s-lab-control-plane --   etcdctl --endpoints=https://127.0.0.1:2379   --cacert=/etc/kubernetes/pki/etcd/ca.crt   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   get /registry/pods/default/etcd-canary --prefix --keys-only
+Command:  `kubectl exec -n kube-system etcd-k8s-lab-control-plane --   etcdctl --endpoints=https://127.0.0.1:2379   --cacert=/etc/kubernetes/pki/etcd/ca.crt   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   get /registry/pods/default/etcd-canary --prefix --keys-only`
 
-Output: /registry/pods/default/etcd-canary
+Output: `/registry/pods/default/etcd-canary`
 
 - Part 3.2 — `kubectl get pods` under the `k8s-lab-system` context (no -n flag)
 
-`
-[root@localhost ~]# kubectl config use-context k8s-lab-system
+`[root@localhost ~]# kubectl config use-context k8s-lab-system
 Switched to context "k8s-lab-system".
 [root@localhost ~]# kubectl get pods
 NAME                                            READY   STATUS    RESTARTS   AGE
@@ -124,7 +122,6 @@ kube-proxy-c4v49                                1/1     Running   0          10d
 kube-proxy-kqgps                                1/1     Running   0          10d
 kube-proxy-xnskl                                1/1     Running   0          10d
 kube-scheduler-k8s-lab-control-plane            1/1     Running   0          10d
-
 `
 - Part 4.2 — the request line(s) from `kubectl apply -v=8`
 - Part 5.1 — the `-w` output showing the deleted pod replaced
