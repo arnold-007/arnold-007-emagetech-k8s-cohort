@@ -106,10 +106,11 @@ Output: `/registry/pods/default/etcd-canary`
 
 - Part 3.2 — `kubectl get pods` under the `k8s-lab-system` context (no -n flag)
 
-`[root@localhost ~]# kubectl config use-context k8s-lab-system
-Switched to context "k8s-lab-system".
+[root@localhost ~]# kubectl config use-context k8s-lab-system
+`Switched to context "k8s-lab-system".`
+
 [root@localhost ~]# kubectl get pods
-NAME                                            READY   STATUS    RESTARTS   AGE
+`NAME                                            READY   STATUS    RESTARTS   AGE
 coredns-589f44dc88-vzsnw                        1/1     Running   0          10d
 coredns-589f44dc88-zv8jc                        1/1     Running   0          10d
 etcd-k8s-lab-control-plane                      1/1     Running   0          10d
