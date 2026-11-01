@@ -203,8 +203,8 @@ flow-demo-84745775cb-xl86w   1/1     Running   0          175m    10.244.2.4   k
 - Part 7.3 — outputs of drills (a)–(d)
   
 (a)
-`[root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{.spec.nodeName}{"\n"}{end}'
-`
+[root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{.spec.nodeName}{"\n"}{end}'
+
 
 `default drill-84799678b7-6vmc6  k8s-lab-worker
 default drill-84799678b7-h2ncn  k8s-lab-worker2
@@ -228,8 +228,9 @@ kube-system     kube-scheduler-k8s-lab-control-plane    k8s-lab-control-plane
 local-path-storage      local-path-provisioner-855c7b7774-dwljz k8s-lab-control-plane`
 
 
-(b)`
+(b)
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get pods -n kube-system -o jsonpath='{.items[*].spec.containers[*].image}' | tr ' ' '\n' | sort -u
+`
 docker.io/kindest/kindnetd:v20260528-9350166c
 registry.k8s.io/coredns/coredns:v1.14.2
 registry.k8s.io/etcd:3.6.8-0
@@ -240,15 +241,15 @@ registry.k8s.io/kube-scheduler:v1.36.1`
 
 
 
-(c) `
+(c) 
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get pods -A --field-selector status.phase!=Running
-No resources found`
+`No resources found`
 
 
 
-  (d)` 
+  (d)
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.allocatable.memory}{"\n"}{end}'
-k8s-lab-control-plane   2777328Ki
+`k8s-lab-control-plane   2777328Ki
 k8s-lab-worker  2777328Ki
 k8s-lab-worker2 2777328Ki
 `
