@@ -1,7 +1,7 @@
 # Assignment 05 — Nnanna Arnold Muoneke
 
 **GitHub username:** arnold-007
-**Date completed:** 2026-07-19
+**Date completed:** 2026-11-01
 
 ## 1. Answers to the 10 questions
 
