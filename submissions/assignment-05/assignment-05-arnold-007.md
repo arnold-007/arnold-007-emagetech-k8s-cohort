@@ -84,7 +84,9 @@ Paste the output of:
  ` 
 NAME                    STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION                         CONTAINER-RUNTIME
 k8s-lab-control-plane   Ready    control-plane   6d10h   v1.36.1   172.18.0.2    <none>        Debian GNU/Linux 13 (trixie)   5.14.0-687.29.1.el9_8.x86_64 (amd64)   containerd://2.3.1
+
 k8s-lab-worker          Ready    <none>          6d10h   v1.36.1   172.18.0.3    <none>        Debian GNU/Linux 13 (trixie)   5.14.0-687.29.1.el9_8.x86_64 (amd64)   containerd://2.3.1
+
 k8s-lab-worker2         Ready    <none>          6d10h   v1.36.1   172.18.0.4    <none>        Debian GNU/Linux 13 (trixie)   5.14.0-687.29.1.el9_8.x86_64 (amd64)   containerd://2.3.1
 `
 
