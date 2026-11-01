@@ -81,14 +81,15 @@ Paste the output of:
 
 - `kubectl get nodes -o wide`
   
- ` 
+ ``` 
 NAME                    STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION                         CONTAINER-RUNTIME
+
 k8s-lab-control-plane   Ready    control-plane   6d10h   v1.36.1   172.18.0.2    <none>        Debian GNU/Linux 13 (trixie)   5.14.0-687.29.1.el9_8.x86_64 (amd64)   containerd://2.3.1
 
 k8s-lab-worker          Ready    <none>          6d10h   v1.36.1   172.18.0.3    <none>        Debian GNU/Linux 13 (trixie)   5.14.0-687.29.1.el9_8.x86_64 (amd64)   containerd://2.3.1
 
 k8s-lab-worker2         Ready    <none>          6d10h   v1.36.1   172.18.0.4    <none>        Debian GNU/Linux 13 (trixie)   5.14.0-687.29.1.el9_8.x86_64 (amd64)   containerd://2.3.1
-`
+```
 
 
 - `kubectl get pods -n kube-system -o wide` (with your three-bucket classification)
@@ -96,17 +97,17 @@ k8s-lab-worker2         Ready    <none>          6d10h   v1.36.1   172.18.0.4   
 
 Pods running on control-plane:
 
-`
+```
 NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 etcd-k8s-lab-control-plane                      1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-apiserver-k8s-lab-control-plane            1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-controller-manager-k8s-lab-control-plane   1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-scheduler-k8s-lab-control-plane            1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
-`
+```
 
 Pods running on every node:
 
-`
+```
 NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 kindnet-2hl86                                   1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kindnet-9cn8g                                   1/1     Running   0          5h5m   172.18.0.3   k8s-lab-worker          <none>           <none>
@@ -114,15 +115,15 @@ kindnet-tr67s                                   1/1     Running   0          5h5
 kube-proxy-c4v49                                1/1     Running   0          5h5m   172.18.0.2   k8s-lab-control-plane   <none>           <none>
 kube-proxy-kqgps                                1/1     Running   0          5h5m   172.18.0.3   k8s-lab-worker          <none>           <none>
 kube-proxy-xnskl                                1/1     Running   0          5h5m   172.18.0.4   k8s-lab-worker2         <none>           <none>
-`
+```
 
 Anything else:
 
-`
+```
 NAME                                            READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
 coredns-589f44dc88-vzsnw                        1/1     Running   0          5h5m   10.244.0.3   k8s-lab-control-plane   <none>           <none>
 coredns-589f44dc88-zv8jc                        1/1     Running   0          5h5m   10.244.0.2   k8s-lab-control-plane   <none>           <none>
-`
+```
 
 
 
@@ -151,7 +152,7 @@ Output: `/registry/pods/default/etcd-canary`
 
 
 [root@localhost ~]# kubectl get pods
-`
+```
 NAME                                            READY   STATUS    RESTARTS   AGE
 coredns-589f44dc88-l5dvc                        1/1     Running   0          28s
 coredns-589f44dc88-l5znz                        1/1     Running   0          28s
@@ -165,13 +166,13 @@ kube-proxy-4vtzs                                1/1     Running   0          24s
 kube-proxy-dbrjr                                1/1     Running   0          24s
 kube-proxy-ppdgc                                1/1     Running   0          28s
 kube-scheduler-k8s-lab-control-plane            1/1     Running   0          36s
-`
+```
 - Part 4.2 — the request line(s) from `kubectl apply -v=8`
 
   
 - Part 5.1 — the `-w` output showing the deleted pod replaced
 
-   `
+```
 NAME                     READY   STATUS         RESTARTS       AGE
 flow-demo-84745775cb-2t7xz   1/1     Running         0             7m52s
 flow-demo-84745775cb-cgfs6   0/1     Pending         0             0s
@@ -194,34 +195,34 @@ flow-demo-84745775cb-xd8s5   1/1     Running             0          1s
 flow-demo-84745775cb-d7svk   0/1     ContainerCreating   0          1s
 flow-demo-84745775cb-cgfs6   1/1     Running             0          4s
 flow-demo-84745775cb-d7svk   1/1     Running             0          4s
-`
+```
 - Part 5.2 — the stuck pod: `Pending` phase + empty `spec.nodeName`
   
-`
+```
 NAME                         READY   STATUS    RESTARTS   AGE   IP           NODE              NOMINATED NODE   READINESS GATES
 flow-demo-84745775cb-cgfs6   1/1     Running   0          53m   10.244.1.2   k8s-lab-worker2   <none>           <none>
 flow-demo-84745775cb-d7svk   1/1     Running   0          53m   10.244.1.3   k8s-lab-worker2   <none>           <none>
 flow-demo-84745775cb-qscqv   0/1     Pending   0          0s    <none>       <none>            <none>           <none>
 flow-demo-84745775cb-xd8s5   1/1     Running   0          53m   10.244.2.3   k8s-lab-worker    <none>           <none>
 flow-demo-84745775cb-xl86w   0/1     Pending   0          0s    <none>       <none>            <none>           <none>
-`
+```
 - Part 5.3 — the same pods `Running` after the scheduler returned
 
-`
+```
 NAME                         READY   STATUS    RESTARTS   AGE     IP           NODE              NOMINATED NODE   READINESS GATES
 flow-demo-84745775cb-cgfs6   1/1     Running   0          3h49m   10.244.1.2   k8s-lab-worker2   <none>           <none>
 flow-demo-84745775cb-d7svk   1/1     Running   0          3h49m   10.244.1.3   k8s-lab-worker2   <none>           <none>
 flow-demo-84745775cb-qscqv   1/1     Running   0          175m    10.244.2.5   k8s-lab-worker    <none>           <none>
 flow-demo-84745775cb-xd8s5   1/1     Running   0          3h49m   10.244.2.3   k8s-lab-worker    <none>           <none>
 flow-demo-84745775cb-xl86w   1/1     Running   0          175m    10.244.2.4   k8s-lab-worker    <none>           <none>
-`
+```
 - Part 7.3 — outputs of drills (a)–(d)
   
 (a)
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{.spec.nodeName}{"\n"}{end}'
 
 
-`
+```
 default drill-84799678b7-6vmc6  k8s-lab-worker
 default drill-84799678b7-h2ncn  k8s-lab-worker2
 default flow-demo-84745775cb-cgfs6      k8s-lab-worker2
@@ -241,19 +242,21 @@ kube-system     kube-proxy-4vtzs        k8s-lab-worker2
 kube-system     kube-proxy-dbrjr        k8s-lab-worker
 kube-system     kube-proxy-ppdgc        k8s-lab-control-plane
 kube-system     kube-scheduler-k8s-lab-control-plane    k8s-lab-control-plane
-local-path-storage      local-path-provisioner-855c7b7774-dwljz k8s-lab-control-plane`
+local-path-storage      local-path-provisioner-855c7b7774-dwljz k8s-lab-control-plane
+```
 
 
 (b)
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get pods -n kube-system -o jsonpath='{.items[*].spec.containers[*].image}' | tr ' ' '\n' | sort -u
-`
+```
 docker.io/kindest/kindnetd:v20260528-9350166c
 registry.k8s.io/coredns/coredns:v1.14.2
 registry.k8s.io/etcd:3.6.8-0
 registry.k8s.io/kube-apiserver:v1.36.1
 registry.k8s.io/kube-controller-manager:v1.36.1
 registry.k8s.io/kube-proxy:v1.36.1
-registry.k8s.io/kube-scheduler:v1.36.1`
+registry.k8s.io/kube-scheduler:v1.36.1
+```
 
 
 
@@ -267,10 +270,11 @@ registry.k8s.io/kube-scheduler:v1.36.1`
   (d)
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.allocatable.memory}{"\n"}{end}'
 
-`k8s-lab-control-plane   2777328Ki
+```
+k8s-lab-control-plane   2777328Ki
 k8s-lab-worker  2777328Ki
 k8s-lab-worker2 2777328Ki
-`
+```
   
 - Part 7.4 — `kubectl top nodes` working after the metrics-server fix
 
@@ -278,11 +282,12 @@ k8s-lab-worker2 2777328Ki
 
 [root@2001-4dd4-4c98-0-be24-11ff-fedb-8ed0 ~]# kubectl top nodes
 
-`NAME                    CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+```
+NAME                    CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
 k8s-lab-control-plane   61m          3%     832Mi           30%
 k8s-lab-worker          20m          1%     363Mi           13%
 k8s-lab-worker2         18m          0%     326Mi           12%
-`
+```
 
 ## 4. One trade-off I had to make
 
